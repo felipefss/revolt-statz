@@ -9,7 +9,7 @@ type Race = {
 type PlayerData = {
   _id: number;
   name: string;
-  championshipsWon: string[];
+  championshipsWon: number[];
   wins: Race[];
   last: Race[];
 };

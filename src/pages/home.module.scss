@@ -1,0 +1,22 @@
+.page {
+  margin-top: 4rem;
+}
+
+.statsColumn {
+  flex: 1 0;
+
+  h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .individualList {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .championshipList {
+    display: flex;
+    justify-content: center;
+  }
+}

@@ -1,18 +1,16 @@
-import styled from "styled-components";
+const spinnerStyle = {
+  width: "3rem",
+  height: "3rem",
+};
 
-interface SpinnerProps {
-  size: number;
-}
-
-const Loading = styled.div`
-  width: ${({ size }: SpinnerProps) => `${size}rem`};
-  height: ${({ size }: SpinnerProps) => `${size}rem`};
-`;
-
-export default function Spinner({ size }: SpinnerProps) {
+export default function Spinner() {
   return (
-    <Loading size={3} className="spinner-border text-primary" role="status">
+    <div
+      className="spinner-border text-primary"
+      style={spinnerStyle}
+      role="status"
+    >
       <span className="visually-hidden">Loading...</span>
-    </Loading>
+    </div>
   );
 }

@@ -18,7 +18,7 @@ export type IChampionship = {
   title: string;
   circuits: Circuits;
   players: Player[];
-  winner: string;
+  winner: number;
   date: string;
 };
 

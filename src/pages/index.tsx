@@ -1,32 +1,23 @@
 import { GetServerSideProps } from "next";
 import Players from "../db/Players";
+import styles from "./home.module.scss";
 
 // Components
 import Spinner from "../components/Spinner";
+import VerticalDivider from "../components/VerticalDivider";
+import StatsList from "../components/StatsList";
 
 // Types
-type Victories = {
+type StatsObj = {
   _id: number;
   name: string;
-  wins: number;
-};
-
-type Defeats = {
-  _id: number;
-  name: string;
-  defeats: number;
-};
-
-type Championships = {
-  _id: number;
-  name: string;
-  championships: number;
+  value: number;
 };
 
 type IndexProps = {
-  victories: [];
-  defeats: [];
-  championships: [];
+  victories: StatsObj[];
+  defeats: StatsObj[];
+  championships: StatsObj[];
 };
 
 // Stats page
@@ -35,11 +26,32 @@ export default function Home({
   defeats,
   championships,
 }: IndexProps) {
-  // Show loading spinner and re-route to whatever page is needed
   return (
-    
+    <div className="container">
+      <div className={`row ${styles.page}`}>
+        <div className={styles.statsColumn}>
+          <h1>Individual</h1>
+          <div className={styles.individualList}>
+            <StatsList list={victories} title="Vitórias" />
+            <StatsList list={defeats} title="Derrotas" />
+          </div>
+        </div>
+
+        <VerticalDivider />
+
+        <div className={styles.statsColumn}>
+          <h1>Campeonatos</h1>
+          <div className={styles.championshipList}>
+            <StatsList list={championships} />
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
+
+// Sort stats from highest to lowest
+const sortDesc = (a: StatsObj, b: StatsObj) => b.value - a.value;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const players = await (await Players()).getAllPlayers();
@@ -49,30 +61,30 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       return {
         _id: player._id,
         name: player.name,
-        wins: player.wins.length,
+        value: player.wins.length,
       };
     })
-    .sort((a, b) => b.wins - a.wins);
+    .sort(sortDesc);
 
   const defeats = players
     .map((player) => {
       return {
         _id: player._id,
         name: player.name,
-        defeats: player.last.length,
+        value: player.last.length,
       };
     })
-    .sort((a, b) => b.defeats - a.defeats);
+    .sort(sortDesc);
 
   const championships = players
     .map((player) => {
       return {
         _id: player._id,
         name: player.name,
-        championships: player.championshipsWon.length,
+        value: player.championshipsWon.length,
       };
     })
-    .sort((a, b) => b.championships - a.championships);
+    .sort(sortDesc);
 
   return {
     props: {

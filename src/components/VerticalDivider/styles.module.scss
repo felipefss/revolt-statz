@@ -1,0 +1,6 @@
+.divider {
+  margin: 3rem 0.5rem 1rem;
+  width: 1px;
+  background: gray;
+  --bs-gutter-x: 0;  /* overwrite bootstrap config */
+}

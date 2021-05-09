@@ -1,0 +1,29 @@
+.wrapper {
+  width: 40%;
+
+  h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 1.2rem;
+  }
+}
+
+.noTitleWrapper {
+  width: 50%;
+  margin-top: 3.2rem;
+}
+
+.list {
+  padding-left: 0;
+
+  li {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+
+    &:first-child {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+  }
+}
