@@ -1,0 +1,45 @@
+.players {
+  display: flex;
+  justify-content: center;
+}
+
+.choiceColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin: 1.5rem 1.5rem 2rem;
+
+  .choiceList {
+    height: 25vh;
+    width: 12.5vw;
+    overflow-y: auto;
+  }
+}
+
+.actionButtons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 2rem 0;
+  margin-top: 0.5rem;
+
+  .selectBtn {
+    width: 0;
+    height: 0;
+    cursor: pointer;
+
+    border-top: 20px solid transparent;
+    border-left: 50px solid #6493cc;
+    border-bottom: 20px solid transparent;
+
+    &:hover {
+      border-left-color: #32557f;
+    }
+  }
+
+  .inverse {
+    transform: rotate(180deg);
+  }
+}

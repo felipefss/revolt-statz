@@ -1,20 +1,26 @@
-import React from "react";
+import Link from "next/link";
 import styles from "./styles.module.scss";
 
-const Navbar: React.FC = () => {
+export default function Navbar() {
   return (
     <nav className={styles.navbar}>
-      <a className="btn btn-secondary btn-lg" href="#">
-        Novo Campeonato
-      </a>
-      <a className="btn btn-secondary btn-lg" href="#">
-        Historico
-      </a>
-      <a className="btn btn-secondary btn-lg" href="#">
-        Stats
-      </a>
+      <ul className="nav">
+        <li className="nav-item">
+          <Link href="/new-championship">
+            <a className="nav-link">Novo Campeonato</a>
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link href="/history">
+            <a className="nav-link">Historico</a>
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link href="/">
+            <a className="nav-link">Stats</a>
+          </Link>
+        </li>
+      </ul>
     </nav>
   );
-};
-
-export default Navbar;
+}

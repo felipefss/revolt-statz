@@ -51,3 +51,5 @@ const getChampionshipsByDate = async (): Promise<IChampionship[]> => {
   const championships = await col.find({}, { sort: [["date", -1]] }).toArray();
   return serialiseDates(championships);
 };
+
+//TODO: Add a function to check if there is an ongoing championship at the current date
