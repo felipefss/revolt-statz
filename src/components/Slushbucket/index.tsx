@@ -21,7 +21,20 @@ export default function Slushbucket({
 }: SlushbucketProps) {
   const [available, setAvailable] = useState(availableItems);
   const [clickedAvailable, setClickedAvailable] = useState({} as DbItem);
-  // const [selected, setSelected] = useState([]);
+  const [clickedSelected, setClickedSelected] = useState({} as DbItem);
+
+  const moveAvailableToSelected = () => {
+    const newAvailable = available.filter(
+      (i) => i._id !== clickedAvailable._id
+    );
+    setAvailable(newAvailable);
+    handleSelect(clickedAvailable);
+  };
+
+  const moveSelectedToAvailable = () => {
+    const newSelected = selected.filter((i) => i._id !== clickedSelected._id);
+    setAvailable([clickedSelected, ...available]);
+  };
 
   return (
     <>
@@ -33,7 +46,7 @@ export default function Slushbucket({
               <option
                 key={item._id}
                 value={item._id}
-                onSelect={() => setClickedAvailable(item)}
+                onClick={() => setClickedAvailable(item)}
               >
                 {item.name}
               </option>
@@ -42,18 +55,25 @@ export default function Slushbucket({
         </div>
 
         <div className={styles.actionButtons}>
-          <div className={styles.selectBtn} />
-          <button type="button" onClick={}>
+          <div className={styles.selectBtn} onClick={moveAvailableToSelected} />
+          <button type="button">
             {circuitChoice ? "Nova pista" : "Novo jogador"}
           </button>
-          <div className={`${styles.selectBtn} ${styles.inverse}`} />
+          <div
+            className={`${styles.selectBtn} ${styles.inverse}`}
+            onClick={moveSelectedToAvailable}
+          />
         </div>
 
         <div className={styles.choiceColumn}>
           <span>Selecionados</span>
           <select className={styles.choiceList} multiple>
             {selected.map((item) => (
-              <option key={item._id} value={item._id}>
+              <option
+                key={item._id}
+                value={item._id}
+                onClick={() => setClickedSelected(item)}
+              >
                 {item.name}
               </option>
             ))}

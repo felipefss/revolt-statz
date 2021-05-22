@@ -21,13 +21,17 @@ type NewChampionshipProps = {
 };
 
 export default function NewChampionship({ players }: NewChampionshipProps) {
-  // const [availablePlayers, setAvailablePlayers] = useState([]);
+  // const [availablePlayers, setAvailablePlayers] = useState([] as DbItem[]);
   const [selectedPlayers, setSelectedPlayers] = useState([] as DbItem[]);
-  // const [availableCircuits, setAvailableCircuits] = useState([]);
+  // const [availableCircuits, setAvailableCircuits] = useState([] as DbItem[]);
   const [selectedCircuits, setSelectedCircuits] = useState([] as DbItem[]);
 
-  const handleSelectPlayer = (item: DbItem) => {
-    setSelectedPlayers([...selectedPlayers, item]);
+  function handleSelectPlayer<T extends DbItem | DbItem[]> (data: T, remove = false): void => {
+    if (!remove) {
+    setSelectedPlayers([...selectedPlayers, data]);
+    } else {
+      setSelectedPlayers(data);
+    }
   };
 
   return (
