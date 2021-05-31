@@ -26,11 +26,12 @@ export default function NewChampionship({ players }: NewChampionshipProps) {
   // const [availableCircuits, setAvailableCircuits] = useState([] as DbItem[]);
   const [selectedCircuits, setSelectedCircuits] = useState([] as DbItem[]);
 
-  function handleSelectPlayer<T extends DbItem | DbItem[]> (data: T, remove = false): void => {
+  const handleSelectPlayer = (data: DbItem, remove = false) => {
     if (!remove) {
     setSelectedPlayers([...selectedPlayers, data]);
     } else {
-      setSelectedPlayers(data);
+      const newSelected = selectedPlayers.filter((i) => i._id !== data._id);
+      setSelectedPlayers(newSelected);
     }
   };
 

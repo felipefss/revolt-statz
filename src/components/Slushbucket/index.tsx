@@ -10,7 +10,7 @@ type SlushbucketProps = {
   availableItems: DbItem[];
   circuitChoice?: boolean;
   selected: DbItem[];
-  handleSelect: (item: DbItem) => void;
+  handleSelect: (item: DbItem, remove?: boolean) => void;
 };
 
 export default function Slushbucket({
@@ -20,20 +20,28 @@ export default function Slushbucket({
   handleSelect,
 }: SlushbucketProps) {
   const [available, setAvailable] = useState(availableItems);
-  const [clickedAvailable, setClickedAvailable] = useState({} as DbItem);
-  const [clickedSelected, setClickedSelected] = useState({} as DbItem);
+  const [clickedAvailable, setClickedAvailable] = useState<DbItem | null>(null);
+  const [clickedSelected, setClickedSelected] = useState<DbItem | null>(null);
 
+  // Move the selected item from the available to the selected list
   const moveAvailableToSelected = () => {
-    const newAvailable = available.filter(
-      (i) => i._id !== clickedAvailable._id
-    );
-    setAvailable(newAvailable);
-    handleSelect(clickedAvailable);
+    if (clickedAvailable) {
+      const newAvailable = available.filter(
+        (i) => i._id !== clickedAvailable._id
+      );
+      setAvailable(newAvailable);
+      handleSelect(clickedAvailable);
+      setClickedAvailable(null);
+    }
   };
 
+  // Move the selected item from the selected to the available list
   const moveSelectedToAvailable = () => {
-    const newSelected = selected.filter((i) => i._id !== clickedSelected._id);
-    setAvailable([clickedSelected, ...available]);
+    if (clickedSelected) {
+      setAvailable([clickedSelected, ...available]);
+      handleSelect(clickedSelected, true);
+      setClickedSelected(null);
+    }
   };
 
   return (
