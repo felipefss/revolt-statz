@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styles from "./styles.module.scss";
+import AddPopup from "../AddPopup";
 
 type DbItem = {
   _id: number;
@@ -44,6 +45,9 @@ export default function Slushbucket({
     }
   };
 
+  const [showModal, setShowModal] = useState(false);
+  const addNewPlayer = () => {};
+
   return (
     <>
       <section className={styles.players}>
@@ -64,7 +68,13 @@ export default function Slushbucket({
 
         <div className={styles.actionButtons}>
           <div className={styles.selectBtn} onClick={moveAvailableToSelected} />
-          <button type="button">
+          <button
+            type="button"
+            className="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#newModal"
+            onClick={() => setShowModal(true)}
+          >
             {circuitChoice ? "Nova pista" : "Novo jogador"}
           </button>
           <div
@@ -88,6 +98,8 @@ export default function Slushbucket({
           </select>
         </div>
       </section>
+
+      <AddPopup show={showModal} onHide={() => setShowModal(false)} />
     </>
   );
 }
