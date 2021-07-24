@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./styles.module.scss";
 import AddPopup from "../AddPopup";
 
@@ -12,6 +12,7 @@ type SlushbucketProps = {
   circuitChoice?: boolean;
   selected: DbItem[];
   handleSelect: (item: DbItem, remove?: boolean) => void;
+  addNewItem: (item: string) => DbItem;
 };
 
 export default function Slushbucket({
@@ -19,10 +20,17 @@ export default function Slushbucket({
   circuitChoice = false,
   selected,
   handleSelect,
+  addNewItem,
 }: SlushbucketProps) {
   const [available, setAvailable] = useState(availableItems);
   const [clickedAvailable, setClickedAvailable] = useState<DbItem | null>(null);
   const [clickedSelected, setClickedSelected] = useState<DbItem | null>(null);
+  const [actionTitle, setActionTitle] = useState("Novo jogador");
+
+  useEffect(() => {
+    // Set action title depending if circuitChoice is true
+    circuitChoice && setActionTitle("Nova pista");
+  }, []);
 
   // Move the selected item from the available to the selected list
   const moveAvailableToSelected = () => {
@@ -46,7 +54,9 @@ export default function Slushbucket({
   };
 
   const [showModal, setShowModal] = useState(false);
-  const addNewPlayer = () => {};
+  const addNewAvailable = (newItem: string) => {
+    //TODO: Add to database, then add to available list
+  };
 
   return (
     <>
@@ -75,7 +85,7 @@ export default function Slushbucket({
             data-bs-target="#newModal"
             onClick={() => setShowModal(true)}
           >
-            {circuitChoice ? "Nova pista" : "Novo jogador"}
+            {actionTitle}
           </button>
           <div
             className={`${styles.selectBtn} ${styles.inverse}`}
@@ -99,7 +109,12 @@ export default function Slushbucket({
         </div>
       </section>
 
-      <AddPopup show={showModal} onHide={() => setShowModal(false)} />
+      <AddPopup
+        title={actionTitle}
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        addItem={addNewAvailable}
+      />
     </>
   );
 }

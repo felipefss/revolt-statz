@@ -28,12 +28,14 @@ export default function NewChampionship({ players }: NewChampionshipProps) {
 
   const handleSelectPlayer = (data: DbItem, remove = false) => {
     if (!remove) {
-    setSelectedPlayers([...selectedPlayers, data]);
+      setSelectedPlayers([...selectedPlayers, data]);
     } else {
       const newSelected = selectedPlayers.filter((i) => i._id !== data._id);
       setSelectedPlayers(newSelected);
     }
   };
+
+  const addNewPlayer = (playerName: string) => {};
 
   return (
     <div className={styles.content}>
@@ -42,6 +44,7 @@ export default function NewChampionship({ players }: NewChampionshipProps) {
         availableItems={players}
         selected={selectedPlayers}
         handleSelect={handleSelectPlayer}
+        addNewItem={addNewPlayer}
       />
       <h2>Escolha as pistas</h2>
       {/* <Slushbucket circuitChoice /> */}
